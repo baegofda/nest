@@ -20,14 +20,14 @@ export class CatsController {
 
   // cats/
   @Get()
-  getAllCat() {
+  getCats() {
     console.log('hello controller');
     return { cats: 'get all cat api' };
   }
 
   // cats/:id
   @Get(':id')
-  getOneCat(@Param('id', ParseIntPipe, PositiveIntPipe) param: number) {
+  getCatById(@Param('id', ParseIntPipe, PositiveIntPipe) param: number) {
     console.log(param);
     // console.log(typeof param);
     return 'get one cat api';
@@ -39,17 +39,17 @@ export class CatsController {
   }
 
   @Put(':id')
-  updateCat() {
+  updateCatById() {
     return 'update cat api';
   }
 
   @Patch(':id')
-  updatePartialCat() {
+  updatePartialCatById() {
     return 'update partial cat api';
   }
 
   @Delete(':id')
-  deleteCat() {
+  deleteCatById() {
     return 'delete service';
   }
 }
