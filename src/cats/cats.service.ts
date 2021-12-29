@@ -1,20 +1,18 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
-import { Cat } from './cat.schema';
 import { CatRequestDto } from './dto/cats.request.dto';
+import { CatsRepository } from './cats.repository';
 
 @Injectable()
 export class CatsService {
   // @InjectModel(Cat.name) -> 해당 클래스가 가지고 있는 고유한 속성(식별자)
   // Cat.name = "Cat"
-  constructor(@InjectModel(Cat.name) private readonly catModel: Model<Cat>) {}
+  constructor(private readonly catsRepository: CatsRepository) {}
 
   async signUp(body: CatRequestDto) {
     const { email, name, password } = body;
     // 해당이메일이 있나?
-    const isCatExist = await this.catModel.exists({ email });
+    const isCatExist = await this.catsRepository.existsByEmail(email);
 
     if (isCatExist) {
       // 403 자체 메소드
@@ -23,7 +21,7 @@ export class CatsService {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const cat = await this.catModel.create({
+    const cat = await this.catsRepository.create({
       email,
       name,
       password: hashedPassword,

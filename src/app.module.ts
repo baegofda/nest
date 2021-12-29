@@ -1,3 +1,4 @@
+import { AuthModule } from './auth/auth.module';
 import { CatsModule } from './cats/cats.module';
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { AppController } from './app.controller';
@@ -10,12 +11,13 @@ import * as mongoose from 'mongoose';
 @Module({
   // 모듈에서 exports되어있는 부분들을 사용가능하게해준다.
   imports: [
-    CatsModule,
     ConfigModule.forRoot(),
     MongooseModule.forRoot(process.env.DATABASE_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     }),
+    AuthModule,
+    CatsModule,
   ],
   controllers: [AppController],
   // 사용될 모듈들의 provider를 하나하나 추가하는건 좋지않은 패턴 [AppService, CatsService....]
