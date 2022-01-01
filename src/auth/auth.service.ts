@@ -1,7 +1,3 @@
-/*
-https://docs.nestjs.com/providers#services
-*/
-
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { CatsRepository } from 'src/cats/cats.repository';
 import { LoginRequestDto } from './dto/login.request.dto';
